@@ -31,7 +31,7 @@ const visualizacaoDeTurma = (arrayTurma,qtdAlunos) =>{
     }
 }
 
-for (let index = 0; index < quantidade; index++) {
+const criacaoDoObjeto = () =>{
     let aluno = {
         nome: null,
         idade: null,
@@ -40,17 +40,30 @@ for (let index = 0; index < quantidade; index++) {
         status: null
     }
 
+    return aluno;
+}
+
+const solicitacaoDeNotas = (objetoAluno) => {
+    for (let index = 0; index < qtdDeNotas; index++) {
+        objetoAluno.nota[index] = validacaoDeNotas(index,objetoAluno.nome);
+        objetoAluno.media = objetoAluno.media + objetoAluno.nota[index];
+    }
+
+    return objetoAluno;
+}
+
+const calculoDeMedia = (media,qtd) => {
+    return media/qtd;
+}
+
+for (let index = 0; index < quantidade; index++) {
+    let aluno = criacaoDoObjeto();
     aluno.nome = prompt("Informe o nome do aluno: ");
     aluno.idade = prompt("Informe a idade: ");
-    for (let index2 = 0; index2 < qtdDeNotas; index2++) {
-        aluno.nota[index2] = validacaoDeNotas(index2,aluno.nome);
-        
-        aluno.media = aluno.media + aluno.nota[index2];
-    }
-    aluno.media = aluno.media/qtdDeNotas;
+    aluno = solicitacaoDeNotas(aluno);
+    aluno.media = calculoDeMedia(aluno.media,qtdDeNotas);
     aluno.status = comparativoDeNotas(aluno.media);
     turma.push(aluno);
 }
-
 
 visualizacaoDeTurma(turma,turma.length);
